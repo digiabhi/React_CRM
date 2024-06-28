@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -46,8 +47,8 @@ function Signup() {
     if (!signupDetails.email || !signupDetails.password || !signupDetails.userStatus || !signupDetails.userType || !signupDetails.name || !signupDetails.clientName) return;
     const response = await dispatch(signup(signupDetails));
     console.log(response);
-    if (response.payload) navigate("/login");
-    else resetSignupStatus();
+    if (response.payload) { toast.success("Successfully signed up!"); navigate("/login"); }
+    else { toast.error("Something went wrong. Please try again!"); resetSignupStatus(); }
   }
   return (
     <div className="flex justify-center items-center h-[90vh]">
