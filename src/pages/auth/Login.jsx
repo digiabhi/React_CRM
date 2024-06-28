@@ -1,27 +1,35 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { login } from "../../Redux/Slices/AuthSlice";
 
 function Login() {
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: ""
   });
 
+  function resetLoginStatus() {
+    setLoginDetails({
+      email: "",
+      password: ""
+    });
+  }
+
   function handleInputChange(e) {
     const { name, value } = e.target;
-    console.log(name, value);
     setLoginDetails({ ...loginDetails, [name]: value });
   }
-  function onSubmit() {
+  async function onSubmit() {
     if (!loginDetails.email || !loginDetails.password) return;
     console.log(loginDetails);
-    const response = dispatch(login(loginDetails));
-    console.log(response);
+    const response = await dispatch(login(loginDetails));
+    if (response.payload) navigate("/");
+    else resetLoginStatus();
   }
   return (
     <div className="flex justify-center items-center h-[90vh]">
@@ -38,6 +46,7 @@ function Login() {
               placeholder="Enter Email"
               className="input input-bordered input-primary w-full max-w-xs text-white"
               autoComplete="one-time-code"
+              value={loginDetails.email}
             />
           </div>
           <div className="w-full">
@@ -48,6 +57,7 @@ function Login() {
               placeholder="Enter Password"
               className="input input-bordered input-primary w-full max-w-xs text-white"
               autoComplete="one-time-code"
+              value={loginDetails.password}
             />
           </div>
           <div className="card-actions w-full mt-4">
