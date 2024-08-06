@@ -35,8 +35,8 @@ function HomeLayout({ children }) {
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                         {/* Sidebar content here */}
-                        <li><a>View all Tickets</a></li>
-                        <li><a>Dashboard</a></li>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/dashboard">Dashboard</Link></li>
                         <li className="absolute bottom-8 w-3/4">
                             <div className="w-full flex justify-center items-center">
                                 {

@@ -1,31 +1,17 @@
-import { useEffect } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import { MdCancel, MdOutlineDoneAll, MdPending } from "react-icons/md";
 import { TbProgressBolt } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
 
 import Card from "../../components/Card";
+import useTickets from "../../hooks/useTickets";
 import HomeLayout from "../../layouts/HomeLayout";
-import { getAllTicketsForTheUser } from "../../Redux/Slices/TicketSlice";
 
 
 function Home() {
-    const authState = useSelector((state) => state.auth);
-    const ticketState = useSelector((state) => state.tickets);
-
-    const dispatch = useDispatch();
-
-    async function loadTickets() {
-        const response = await dispatch(getAllTicketsForTheUser());
-        console.log(response);
-    }
-
-    useEffect(() => {
-        loadTickets();
-    }, [authState.token]);
+    const [ticketState] = useTickets();
     return (
         <HomeLayout>
-            <div className="mt-10 flex flex-row justify-center items-center gap-5 flex-wrap">
+            {ticketState && (<div className="mt-10 flex flex-row justify-center items-center gap-5 flex-wrap">
                 <Card
                     status={ticketState.ticketDistribution.open / ticketState.ticketList.length}
                     quantity={ticketState.ticketDistribution.open}
@@ -76,7 +62,8 @@ function Home() {
                     dividerColor="bg-black">
                     <MdCancel className="inline mr-2" />
                 </Card>
-            </div>
+            </div>)}
+
         </HomeLayout>
     );
 }
