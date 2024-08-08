@@ -13,7 +13,7 @@ function Home() {
         <HomeLayout>
             {ticketState && (<div className="mt-10 flex flex-row justify-center items-center gap-5 flex-wrap">
                 <Card
-                    status={ticketState.ticketDistribution.open / ticketState.ticketList.length}
+                    status={ticketState.ticketDistribution.open / ticketState.downloadedTickets.length}
                     quantity={ticketState.ticketDistribution.open}
                     titleText="Open"
                     background="bg-yellow-300"
@@ -23,7 +23,7 @@ function Home() {
                     <BsFillPencilFill className="inline mr-2" />
                 </Card>
                 <Card
-                    status={ticketState.ticketDistribution.inProgress / ticketState.ticketList.length}
+                    status={ticketState.ticketDistribution.inProgress / ticketState.downloadedTickets.length}
                     quantity={ticketState.ticketDistribution.inProgress}
                     titleText="In Progress"
                     background="bg-orange-300"
@@ -33,7 +33,7 @@ function Home() {
                     <TbProgressBolt className="inline mr-2" />
                 </Card>
                 <Card
-                    status={ticketState.ticketDistribution.resolved / ticketState.ticketList.length}
+                    status={ticketState.ticketDistribution.resolved / ticketState.downloadedTickets.length}
                     quantity={ticketState.ticketDistribution.resolved}
                     titleText="Resolved"
                     background="bg-purple-300"
@@ -43,7 +43,7 @@ function Home() {
                     <MdOutlineDoneAll className="inline mr-2" />
                 </Card>
                 <Card
-                    status={ticketState.ticketDistribution.onHold / ticketState.ticketList.length}
+                    status={ticketState.ticketDistribution.onHold / ticketState.downloadedTickets.length}
                     quantity={ticketState.ticketDistribution.onHold}
                     titleText="On Hold"
                     background="bg-gray-300"
@@ -53,7 +53,7 @@ function Home() {
                     <MdPending className="inline mr-2" />
                 </Card>
                 <Card
-                    status={ticketState.ticketDistribution.cancelled / ticketState.ticketList.length}
+                    status={ticketState.ticketDistribution.cancelled / ticketState.downloadedTickets.length}
                     quantity={ticketState.ticketDistribution.cancelled}
                     titleText="Cancelled"
                     background="bg-blue-300"
