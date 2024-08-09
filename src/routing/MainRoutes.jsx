@@ -4,6 +4,8 @@ import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/home/Home";
+import ListAllUsers from "../pages/users/ListAllUsers";
+import AuthRoutes from "./AuthRoutes";
 
 function MainRoutes() {
     return (
@@ -11,6 +13,9 @@ function MainRoutes() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route element={<AuthRoutes allowedListedRoutes={["admin"]} />}>
+                <Route path="/users" element={<ListAllUsers />} />
+            </Route>
             <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
     );
