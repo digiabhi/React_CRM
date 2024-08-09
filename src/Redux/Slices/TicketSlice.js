@@ -39,7 +39,7 @@ const ticketSlice = createSlice({
     reducers: {
         filterTickets: (state, action) => {
             let status = action.payload.status.toLowerCase();
-            if (status == "in progress") status = "inProgress"
+            if (status == "in progress") status = "inProgress";
             state.ticketList = state.downloadedTickets.filter((ticket) => ticket.status === status);
         },
         resetTicketList: (state) => {
