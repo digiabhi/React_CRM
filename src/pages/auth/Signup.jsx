@@ -45,7 +45,7 @@ function Signup() {
   }
   async function onSubmit() {
     if (!signupDetails.email || !signupDetails.password || !signupDetails.userStatus || !signupDetails.userType || !signupDetails.name || !signupDetails.clientName) return;
-    const response = await dispatch(signup(signupDetails));
+    const response = dispatch(signup(signupDetails));
     console.log(response);
     if (response.payload) { toast.success("Successfully signed up!"); navigate("/login"); }
     else { toast.error("Something went wrong. Please try again!"); resetSignupStatus(); }
