@@ -137,7 +137,7 @@ function Dashboard() {
                         setSelectedTicket(row);
                         document.getElementById("ticket_modal").showModal();
                     }} columns={columns} data={ticketState.ticketList} expandableRows expandableRowsComponent={ExpandedComponent} customStyles={customStyles} />}
-                    <TicketDetailsModal ticket={selectedTicket} />
+                    <TicketDetailsModal ticket={selectedTicket} key={selectedTicket._id} />
                 </div>
 
             </div>

@@ -33,6 +33,27 @@ export const getAllTicketsForTheUser = createAsyncThunk('tickets/getAllTicketsFo
     }
 });
 
+
+export const updateTicket = createAsyncThunk('tickets/updateTicket', async (ticket) => {
+    try {
+        const response = axiosInstance.patch(`ticket/${ticket._id}`,
+            ticket, // req body
+            {
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                }
+            });
+        toast.promise(response, {
+            success: "Successfully updated the ticket",
+            loading: "Updating the ticket",
+            error: "Something went wrong"
+        });
+        return await response;
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 const ticketSlice = createSlice({
     name: "tickets",
     initialState,
@@ -47,22 +68,45 @@ const ticketSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(getAllTicketsForTheUser.fulfilled, (state, action) => {
-            if (!action?.payload?.data) return;
-            state.ticketList = action?.payload?.data?.result;
-            state.downloadedTickets = action?.payload?.data?.result;
-            const tickets = action?.payload?.data?.result;
-            state.ticketDistribution = {
-                open: 0,
-                inProgress: 0,
-                resolved: 0,
-                onHold: 0,
-                cancelled: 0
-            };
-            tickets.forEach(ticket => {
-                state.ticketDistribution[ticket.status] = state.ticketDistribution[ticket.status] + 1;
+        builder
+            .addCase(getAllTicketsForTheUser.fulfilled, (state, action) => {
+                if (!action?.payload?.data) return;
+                state.ticketList = action?.payload?.data?.result;
+                state.downloadedTickets = action?.payload?.data?.result;
+                const tickets = action?.payload?.data?.result;
+                state.ticketDistribution = {
+                    open: 0,
+                    inProgress: 0,
+                    resolved: 0,
+                    onHold: 0,
+                    cancelled: 0
+                };
+                tickets.forEach(ticket => {
+                    state.ticketDistribution[ticket.status] = state.ticketDistribution[ticket.status] + 1;
+                });
+            })
+            .addCase(updateTicket.fulfilled, (state, action) => {
+                const updatedTicket = action.payload.data.result;
+                state.ticketList = state.ticketList.map((ticket) => {
+                    if (ticket._id == updatedTicket._id) return updatedTicket;
+                    return ticket;
+                });
+                state.downloadedTickets = state.downloadedTickets.map((ticket) => {
+                    if (ticket._id == updatedTicket._id) return updatedTicket;
+                    return ticket;
+                });
+                state.ticketDistribution = {
+                    open: 0,
+                    inProgress: 0,
+                    resolved: 0,
+                    onHold: 0,
+                    cancelled: 0
+                };
+                state.downloadedTickets.forEach(ticket => {
+                    state.ticketDistribution[ticket.status] = state.ticketDistribution[ticket.status] + 1;
+                });
             });
-        });
+
     }
 });
 
