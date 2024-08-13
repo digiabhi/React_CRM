@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-import { filterTickets, getAllTicketsForTheUser, resetTicketList } from "../Redux/Slices/TicketSlice";
+import { filterTickets, getAllCreatedTicketsForTheUser, getAllTicketsForTheUser, resetTicketList } from "../Redux/Slices/TicketSlice";
 
 function useTickets() {
     const authState = useSelector((state) => state.auth);
@@ -15,7 +15,11 @@ function useTickets() {
 
     async function loadTickets() {
         if (ticketState.ticketList.length == 0) {
-            dispatch(getAllTicketsForTheUser());
+            if (authState.role == 'customer') {
+                dispatch(getAllCreatedTicketsForTheUser());
+            } else {
+                dispatch(getAllTicketsForTheUser());
+            }
         }
         if (searchParams.get("status")) {
             dispatch(filterTickets({ status: ticketStatus }));
