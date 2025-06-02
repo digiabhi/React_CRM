@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: react-crm
+  description: A CRM tool built with React and Vite
+  annotations:
+    github.com/project-slug: digiabhi/React_CRM
+spec:
+  type: tool
+  lifecycle: experimental
+  owner: digiabhi
